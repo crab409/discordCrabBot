@@ -1,14 +1,13 @@
 // 필요한 모듈 가져오기
 const { Client, Events, GatewayIntentBits } = require("discord.js");
 const { MongoClient } = require("mongodb");
-const { getCommand } = require("./function/getCommand.js")
-const { dailyCheck } = require("./function/dailyCheck.js")
+const { getCommand } = require("./function/getCommand.js");
+const { dailyCheck } = require("./function/dailyCheck.js");
+const { checkPercent } = require("./function/checkPercent.js")
 require("dotenv").config();
 
 const token = process.env.TOKEN;
-const dbId = process.env.DB_ID;
-const dbPassWord = process.env.DB_PASSWORD;
-const mongoUrl = `mongodb+srv://${dbId}:${dbPassWord}@yumin0878.lam7a.mongodb.net/?retryWrites=true&w=majority&appName=yumin0878`;
+const mongoUrl = process.env.DB_URL;
 
 // Discord 클라이언트 생성
 const client = new Client({
@@ -49,9 +48,10 @@ client.on("messageCreate", async (message) => {
             message.channel.send("잘못된 입력이 감지되었습니다! 다시 입력해 주세요.")
         } else if (commandNumber == 0) {
             console.log(`>> command 00(daily check) inputed!\tuser id: ${message.author.id}`)
-            await dailyCheck(db, message)
+            await dailyCheck(db, message);
         } else if (commandNumber == 1) {
             console.log(`>> command 01(visualize recode self) inputed\tuser id: ${message.author.id}`)
+            await checkPercent(db, message);
         }
     }
 });
