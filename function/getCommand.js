@@ -6,13 +6,17 @@ const getCommand = (content) => {
     if ((operation == "!출석") || (operation == "!출첵")) {
         if (operand.length != 0) return -1;
         return 0;
-
     }
     
-    if ("!출석률") {
+    if (operation == "!출석률") {
         if (operand.length > 1) return -1;
         if (operand.length == 0) return 1;
         if (operand.length == 1) return 2; 
+    } 
+
+    if (operation == "!소스코드") {
+        if (operand.length > 0) return -1;
+        return 3;
     }
 }
 

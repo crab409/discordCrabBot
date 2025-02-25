@@ -60,16 +60,21 @@ const getWeekPercent = (recode) => {
 
 
 
-const checkPercent = async (db, message) => {
-    let data = await db.collection("recode").findOne({discordId: message.author.id});
-    console.log(data)
+const checkPercent = async (db, discordId, channel) => {
+    let data = await db.collection("recode").findOne({discordId: discordId});
+    if (data == null) {
+        console.log(`${discordId} is an ID that is not registered in the DB.\nreturn None\n`);
+        channel.send(`죄송해요! DataBase에 <@${discordId}>님의 데이터가 존재하지 않아요!\n이전에 출첵을 한적이 있는지 확인해주시고, 계속 문제가 발생하면 개발자에게 연락 주세요!`);
+        return;
+    }
     let recode = data.recode.split('\n').reverse();
     let yearPer = await getYearPercent(recode);
     let monthPer = await getMonthPercent(recode);
     let weekPer = await getWeekPercent(recode);
 
-    text = `<@${message.author.id}>님의 출석률을 표시해드릴께요! \n\`\`\`ansi\n연간 출석률 => [0;34m${yearPer}%[0m\n월간 출석률 => [0;34m${monthPer}%[0m\n주간 출석률 => [0;34m${weekPer}%[0m\n\`\`\``
-    message.channel.send(text);
+    text = `<@${discordId}>님의 출석률을 표시해드릴께요! \n\`\`\`ansi\n연간 출석률 => [0;34m${yearPer}%[0m\n월간 출석률 => [0;34m${monthPer}%[0m\n주간 출석률 => [0;34m${weekPer}%[0m\n\`\`\``
+    channel.send(text);
+    console.log("Message sent successfully.\n")
 }
 
 exports.checkPercent = checkPercent;

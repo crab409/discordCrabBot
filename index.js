@@ -51,7 +51,13 @@ client.on("messageCreate", async (message) => {
             await dailyCheck(db, message);
         } else if (commandNumber == 1) {
             console.log(`>> command 01(visualize recode self) inputed\tuser id: ${message.author.id}`)
-            await checkPercent(db, message);
+            await checkPercent(db, message.author.id, message.channel);
+        } else if (commandNumber == 2) {
+            console.log(`>> command 02(visualize recode other one) inputed\tuser id: ${message.author.id}\ttaget id: ${message.mentions.users.first().id}`)
+            await checkPercent(db, message.mentions.users.first().id, message.channel);
+        } else if (commandNumber == 3) {
+            console.log(`>> command 03(Source code provided) inputed\tuser id ${message.author.id}`);
+            message.channel.send("제 본 모습을 제공해드릴께요!\nhttps://github.com/crab409/discordCrabBot");
         }
     }
 });
