@@ -7,7 +7,9 @@ const getCommand = (content) => {
         if (operand.length != 0) return -1;
         return 0;
 
-    } else if (("!기록") || ("!기록열람") || ("!기록보기")) {
+    }
+    
+    if ("!출석률") {
         if (operand.length > 1) return -1;
         if (operand.length == 0) return 1;
         if (operand.length == 1) return 2; 

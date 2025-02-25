@@ -1,18 +1,10 @@
-const getWeek = (date) => {
-    const currentDate = date.getDate();
-    const firstDay = new Date(date.setDate(1)).getDay();
-  
-    return Math.ceil((currentDate + firstDay) / 7);
-};
+const { getDate } = require("./function/getDate.js")
 
-const CheckedCheck = () => {
+const getWeekPercent = () => {
     let today = new Date();
-    let year = today.getFullYear();
-    let month = today.getMonth();
-    let date = today.getDate();
-    let week = getWeek(today)
-    today = year + '-' + month + '-' + date + ':' + week
-    return today
-};
+    let numOfDays = today.getDay() + 1;
+    let nowWeek = getDate().split(':')[1];
+    console.log(numOfDays)
+}
 
-console.log(CheckedCheck())
+getWeekPercent()
